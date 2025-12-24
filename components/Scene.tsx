@@ -64,12 +64,12 @@ export const Scene: React.FC<SceneProps> = ({ treeState, gestureState, zoom }) =
       <group position={[0, -2, 0]}>
         <Foliage treeState={treeState} />
         
-        {/* Significantly reduced counts for a sparse, elegant look */}
-        <Ornaments treeState={treeState} type="box" count={70} />
-        <Ornaments treeState={treeState} type="ball" count={150} />
-        <Ornaments treeState={treeState} type="light" count={280} />
+        {/* Even more sparse ornaments for an ultra-premium feel */}
+        <Ornaments treeState={treeState} type="box" count={45} />
+        <Ornaments treeState={treeState} type="ball" count={85} />
+        <Ornaments treeState={treeState} type="light" count={180} />
         
-        {/* Decorative Spiral Line - Kept prominent */}
+        {/* Decorative Spiral Line - The core highlight */}
         <DecorativeSpiral treeState={treeState} count={500} />
         
         <Star treeState={treeState} />
