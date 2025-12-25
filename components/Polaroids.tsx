@@ -9,30 +9,27 @@ interface PolaroidsProps {
   treeState: TreeState;
 }
 
-const IMAGE_IDS = [
-  '1513297856428-1139199c8d1c',
-  '1543589077-47d81606c1ad',
-  '1512474932049-7826d6909240',
-  '1481131319519-6bc229988267',
-  '1511268559489-34b6248bbec3',
-  '1513297856428-1139199c8d1c'
+// Using picsum.photos for reliable placeholder images with Christmas/winter themes
+const IMAGE_URLS = [
+  'https://picsum.photos/seed/xmas1/200/240',
+  'https://picsum.photos/seed/xmas2/200/240',
+  'https://picsum.photos/seed/xmas3/200/240',
+  'https://picsum.photos/seed/xmas4/200/240',
+  'https://picsum.photos/seed/xmas5/200/240',
+  'https://picsum.photos/seed/xmas6/200/240'
 ];
 
-const IMAGE_URLS = IMAGE_IDS.map(id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=200&q=80`);
-
 export const Polaroids: React.FC<PolaroidsProps> = ({ treeState }) => {
-  let textures: THREE.Texture[] = [];
-  try {
-    const loaded = useTexture(IMAGE_URLS);
-    textures = Array.isArray(loaded) ? loaded : [loaded];
-  } catch (e) {
-    console.warn("Polaroid textures failed to load", e);
-  }
-  
   const groupRef = useRef<THREE.Group>(null);
+  
+  // Load textures - drei will handle loading states
+  const loadedTextures = useTexture(IMAGE_URLS);
+  const textures = useMemo(() => {
+    return Array.isArray(loadedTextures) ? loadedTextures : (loadedTextures ? [loadedTextures] : []);
+  }, [loadedTextures]);
 
   const items = useMemo(() => {
-    if (!textures.length) return [];
+    if (!textures || textures.length === 0) return [];
     
     return textures.map((tex, i) => {
       const chaos = getRandomSpherePoint(12);
